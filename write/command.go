@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/gum/internal/stdin"
 	"github.com/charmbracelet/huh"
 )
@@ -26,7 +27,9 @@ func (o Options) Run() error {
 	theme.Focused.TextInput.Prompt = o.PromptStyle.ToLipgloss()
 
 	keymap := huh.NewDefaultKeyMap()
-	keymap.Text.NewLine.SetHelp("ctrl+j", "new line")
+	// keymap.Text.NewLine.SetHelp("ctrl+j", "new line")
+	keymap.Text.NewLine = key.NewBinding(key.WithKeys("enter"))
+	keymap.Text.Submit = key.NewBinding(key.WithKeys("ctrl+d"))
 
 	err := huh.NewForm(
 		huh.NewGroup(
